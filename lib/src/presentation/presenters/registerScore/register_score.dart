@@ -11,15 +11,31 @@ part 'register_score.g.dart';
 class RegisterAdressStore = _RegisterAdressStore with _$RegisterAdressStore;
 
 abstract class _RegisterAdressStore with Store {
-  final RemoteAdress _remoteAdress = RemoteAdress();
+  _RegisterAdressStore({
+    List<AdressModel>? adressSave,
+    List<AdressModel>? adressArguments,
+  })  : adressSave = adressSave ?? [],
+        adressArguments = adressArguments ?? [],
+        _remoteAdress = RemoteAdress() {
+    _initializeAdressSave(adressSave);
+
+    // Chama saveListAdress no construtor para salvar os dados ao abrir a tela
+    saveListAdress();
+  }
+
+  final RemoteAdress _remoteAdress;
 
   @observable
   List<AdressModel>? adressShared;
+
   @observable
-  List<AdressModel>? adressSave = [];
+  List<AdressModel>? adressSave;
 
   @observable
   bool loading = false;
+
+  @observable
+  List<AdressModel>? adressArguments;
 
   @observable
   TextEditingController ufController = TextEditingController();
@@ -29,14 +45,23 @@ abstract class _RegisterAdressStore with Store {
   TextEditingController logController = TextEditingController();
 
   @action
+  void _initializeAdressSave(List<AdressModel>? initialAdressSave) {
+    if (initialAdressSave != null && initialAdressSave.isNotEmpty) {
+      adressSave = initialAdressSave;
+    }
+  }
+
+  @action
   Future<void> getAdress() async {
     try {
+      saveListAdress();
       loading = true;
 
       adressShared = await _remoteAdress.fetchAdress(
-          ufController.value.text.toString(),
-          bairroController.value.text.toString(),
-          logController.value.text.toString());
+        ufController.value.text.toString(),
+        bairroController.value.text.toString(),
+        logController.value.text.toString(),
+      );
     } catch (e) {
       print('Erro ao buscar endereço: $e');
       throw Exception('Erro ao buscar endereço: $e');
@@ -56,5 +81,17 @@ abstract class _RegisterAdressStore with Store {
     Get.to(() => AdressPage(
           adressArguments: adressSave,
         ));
+  }
+
+  @action
+  void saveListAdress() {
+    if (adressArguments != null && adressArguments!.isNotEmpty) {
+      // Limpa a lista antes de adicionar os novos itens
+      adressSave!.clear();
+
+      for (var element in adressArguments!) {
+        adressSave!.add(element);
+      }
+    }
   }
 }

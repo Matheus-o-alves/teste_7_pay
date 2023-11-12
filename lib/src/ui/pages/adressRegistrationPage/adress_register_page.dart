@@ -9,10 +9,15 @@ import '../../../presentation/presenters/adressScore/adress_score.dart';
 import '../../../presentation/presenters/registerScore/register_score.dart';
 
 class RegisterAdressPage extends StatelessWidget {
-  final RegisterAdressStore _registerAdressStore = RegisterAdressStore();
+  final List<AdressModel>? registerAdressArguments;
+
+  const RegisterAdressPage({super.key, this.registerAdressArguments});
 
   @override
   Widget build(BuildContext context) {
+    final RegisterAdressStore _registerAdressStore =
+        RegisterAdressStore(adressArguments: registerAdressArguments);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Register Adress'),
@@ -134,6 +139,8 @@ class RegisterAdressPage extends StatelessWidget {
                       alignment: Alignment.bottomRight,
                       child: ElevatedButton(
                         onPressed: () {
+                         
+
                           Get.to(() => AdressPage(
                                 adressArguments:
                                     _registerAdressStore.adressSave,

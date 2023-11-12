@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get/get.dart';
 import 'package:teste_7_pay/src/ui/pages/adressRegistrationPage/adress_register_page.dart';
 
 import '../../../data/models/address_model.dart';
@@ -103,10 +104,22 @@ class AdressPage extends StatelessWidget {
                         Expanded(
                           child: Observer(
                             builder: (_) => TextField(
+                              controller: _adressStore.bairroController,
+                              onChanged: (String) {},
+                              decoration: InputDecoration(
+                                hintText: 'Digite o bairro...',
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: Observer(
+                            builder: (_) => TextField(
                               controller: _adressStore.ufController,
                               onChanged: (String) {},
                               decoration: InputDecoration(
-                                hintText: 'Digite o endereço...',
+                                hintText: 'Digite o UF...',
                               ),
                             ),
                           ),
@@ -114,7 +127,7 @@ class AdressPage extends StatelessWidget {
                         SizedBox(width: 10),
                         ElevatedButton(
                           onPressed: () {
-                            _adressStore.getAdress();
+                            _adressStore.filterAdress();
                           },
                           child: Text('Filtrar'),
                         ),
@@ -126,11 +139,17 @@ class AdressPage extends StatelessWidget {
                         SizedBox(width: 10),
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RegisterAdressPage()),
-                            );
+                            Get.to(() => RegisterAdressPage(
+                                  registerAdressArguments: adressArguments,
+                                ));
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => RegisterAdressPage(
+                            //             registerAdressArguments:
+                            //                 adressArguments,
+                            //           )),
+                            // );
                           },
                           child: Text('Cadastrar'),
                         ),
@@ -144,6 +163,11 @@ class AdressPage extends StatelessWidget {
                         try {
                           if (_adressStore.loading) {
                             return CircularProgressIndicator();
+                          } else if (_adressStore.filteredAdress != null &&
+                              _adressStore.filteredAdress!.isNotEmpty) {
+                            List<AdressModel>? filteredData =
+                                _adressStore.filteredAdress;
+                            return buildDataTable(filteredData);
                           } else {
                             return buildDataTable(adressArguments);
                           }

@@ -30,7 +30,13 @@ abstract class _AdressStore with Store {
   List<AdressModel>? adressArguments;
 
   @observable
+  List<AdressModel>? filteredAdress;
+
+  @observable
   bool loading = false;
+
+  @observable
+  String? errorMessage;
 
   @observable
   TextEditingController ufController = TextEditingController();
@@ -72,6 +78,18 @@ abstract class _AdressStore with Store {
     adressSave!.add(selectedAdress);
   }
 
+  @action
+  void filterAdress() {
+    errorMessage = null;
+
+    if (adressArguments != null) {
+      filteredAdress = adressArguments!
+          .where((address) =>
+              address.bairro == bairroController.text &&
+              address.uf == ufController.text)
+          .toList();
+    }
+  }
   // @action
   // void navigateToExpenseDetails() {
   //   Get.to(() => RegisterAdressPage());

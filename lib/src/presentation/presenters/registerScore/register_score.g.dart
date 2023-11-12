@@ -57,6 +57,22 @@ mixin _$RegisterAdressStore on _RegisterAdressStore, Store {
     });
   }
 
+  late final _$adressArgumentsAtom =
+      Atom(name: '_RegisterAdressStore.adressArguments', context: context);
+
+  @override
+  List<AdressModel>? get adressArguments {
+    _$adressArgumentsAtom.reportRead();
+    return super.adressArguments;
+  }
+
+  @override
+  set adressArguments(List<AdressModel>? value) {
+    _$adressArgumentsAtom.reportWrite(value, super.adressArguments, () {
+      super.adressArguments = value;
+    });
+  }
+
   late final _$ufControllerAtom =
       Atom(name: '_RegisterAdressStore.ufController', context: context);
 
@@ -117,6 +133,17 @@ mixin _$RegisterAdressStore on _RegisterAdressStore, Store {
       ActionController(name: '_RegisterAdressStore', context: context);
 
   @override
+  void _initializeAdressSave(List<AdressModel>? initialAdressSave) {
+    final _$actionInfo = _$_RegisterAdressStoreActionController.startAction(
+        name: '_RegisterAdressStore._initializeAdressSave');
+    try {
+      return super._initializeAdressSave(initialAdressSave);
+    } finally {
+      _$_RegisterAdressStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void selectAdress(AdressModel selectedAdress) {
     final _$actionInfo = _$_RegisterAdressStoreActionController.startAction(
         name: '_RegisterAdressStore.selectAdress');
@@ -139,11 +166,23 @@ mixin _$RegisterAdressStore on _RegisterAdressStore, Store {
   }
 
   @override
+  void saveListAdress() {
+    final _$actionInfo = _$_RegisterAdressStoreActionController.startAction(
+        name: '_RegisterAdressStore.saveListAdress');
+    try {
+      return super.saveListAdress();
+    } finally {
+      _$_RegisterAdressStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 adressShared: ${adressShared},
 adressSave: ${adressSave},
 loading: ${loading},
+adressArguments: ${adressArguments},
 ufController: ${ufController},
 bairroController: ${bairroController},
 logController: ${logController}

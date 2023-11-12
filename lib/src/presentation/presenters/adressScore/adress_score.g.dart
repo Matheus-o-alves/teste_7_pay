@@ -57,6 +57,22 @@ mixin _$AdressStore on _AdressStore, Store {
     });
   }
 
+  late final _$filteredAdressAtom =
+      Atom(name: '_AdressStore.filteredAdress', context: context);
+
+  @override
+  List<AdressModel>? get filteredAdress {
+    _$filteredAdressAtom.reportRead();
+    return super.filteredAdress;
+  }
+
+  @override
+  set filteredAdress(List<AdressModel>? value) {
+    _$filteredAdressAtom.reportWrite(value, super.filteredAdress, () {
+      super.filteredAdress = value;
+    });
+  }
+
   late final _$loadingAtom =
       Atom(name: '_AdressStore.loading', context: context);
 
@@ -70,6 +86,22 @@ mixin _$AdressStore on _AdressStore, Store {
   set loading(bool value) {
     _$loadingAtom.reportWrite(value, super.loading, () {
       super.loading = value;
+    });
+  }
+
+  late final _$errorMessageAtom =
+      Atom(name: '_AdressStore.errorMessage', context: context);
+
+  @override
+  String? get errorMessage {
+    _$errorMessageAtom.reportRead();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(String? value) {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
+      super.errorMessage = value;
     });
   }
 
@@ -155,12 +187,25 @@ mixin _$AdressStore on _AdressStore, Store {
   }
 
   @override
+  void filterAdress() {
+    final _$actionInfo = _$_AdressStoreActionController.startAction(
+        name: '_AdressStore.filterAdress');
+    try {
+      return super.filterAdress();
+    } finally {
+      _$_AdressStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 adressShared: ${adressShared},
 adressSave: ${adressSave},
 adressArguments: ${adressArguments},
+filteredAdress: ${filteredAdress},
 loading: ${loading},
+errorMessage: ${errorMessage},
 ufController: ${ufController},
 bairroController: ${bairroController},
 logController: ${logController}
