@@ -37,8 +37,8 @@ O Sistema de Gerenciamento de Endereços é uma aplicação desenvolvida para fa
    - Utiliza o MobX para um eficiente controle de estado e reatividade na aplicação.
 
 
-5. **Login Seguro:**
-   - Implementa um sistema de login seguro para garantir o acesso apenas a usuários autorizados.
+5. **Login **
+   - Implementa um sistema de login com usuário e senha.
 
 
 ---
