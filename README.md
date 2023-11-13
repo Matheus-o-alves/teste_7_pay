@@ -2,15 +2,121 @@
 
 A new Flutter project.
 
-## Getting Started
+# Sistema de Gerenciamento de Endereços
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Descrição
+
+
+O Sistema de Gerenciamento de Endereços é uma aplicação desenvolvida para facilitar o cadastro, busca e seleção de endereços. Ele oferece uma interface amigável para os usuários interagirem com as funcionalidades relacionadas a endereços, utilizando uma abordagem intuitiva e eficiente.
+
+
+---
+
+
+## Funcionalidades Principais
+
+
+1. **Pesquisa de Endereços:**
+   - Permite aos usuários buscar endereços com base em critérios como UF, Bairro e Logradouro.
+
+
+2. **Cadastro e Seleção de Endereços:**
+   - Oferece a capacidade de cadastrar novos endereços.
+   - Permite aos usuários selecionar endereços a partir dos resultados de pesquisa.
+
+
+3. **Interface Amigável:**
+   - Desenvolvida com uma interface de usuário intuitiva para proporcionar uma experiência agradável.
+
+
+4. **Controle de Estado:**
+   - Utiliza o MobX para um eficiente controle de estado e reatividade na aplicação.
+
+
+5. **Login Seguro:**
+   - Implementa um sistema de login seguro para garantir o acesso apenas a usuários autorizados.
+
+
+---
+
+
+## Tecnologias Utilizadas
+
+
+- **Flutter:**
+  - Framework de desenvolvimento de aplicativos móveis.
+  - Facilita a criação de interfaces ricas e responsivas.
+
+
+- **Dart:**
+  - Linguagem de programação eficiente para o desenvolvimento de aplicativos Flutter.
+
+
+- **MobX:**
+  - Biblioteca de gerenciamento de estado para uma experiência de desenvolvimento reativa.
+
+
+- **HTTP Package:**
+  - Utilizado para realizar requisições HTTP, facilitando a comunicação com serviços externos.
+
+
+---
+
+
+## Instalação e Execução
+
+
+1. Clone este repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/sistema-gerenciamento-enderecos.git
+   ```
+
+
+2. Navegue até o diretório do projeto:
+   ```bash
+   cd sistema-gerenciamento-enderecos
+   ```
+
+
+3. Instale as dependências:
+   ```bash
+   flutter pub get
+   ```
+
+
+4. Execute a aplicação:
+   ```bash
+   flutter run
+   ```
+
+
+---
+
+
+## Autor
+
+
+**Seu Nome**
+- GitHub: [seu-usuario](https://github.com/Matheus-o-alves)
+
+
+---
+
+
+## Contribuições
+
+
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests.
+
+
+---
+
+
+## Licença
+
+
+Este projeto está licenciado sob a [Licença MIT](LICENSE).
