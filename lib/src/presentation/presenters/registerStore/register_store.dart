@@ -5,7 +5,7 @@ import 'package:teste_7_pay/src/data/models/address_model.dart';
 import '../../../data/usecases/remote_adress.dart';
 import 'dart:async';
 
-part 'register_score.g.dart';
+part 'register_store.g.dart';
 
 // ignore: library_private_types_in_public_api
 class RegisterAdressStore = _RegisterAdressStore with _$RegisterAdressStore;
@@ -43,11 +43,9 @@ abstract class _RegisterAdressStore with Store {
   @observable
   TextEditingController logController = TextEditingController();
 
-  // Adicione um StreamController para notificar sobre alterações na lista
   final _selectedAdressListController =
       StreamController<List<AdressModel>>.broadcast();
 
-  // Getter para a stream
   Stream<List<AdressModel>> get selectedAdressListStream =>
       _selectedAdressListController.stream;
 
@@ -84,7 +82,6 @@ abstract class _RegisterAdressStore with Store {
       adressSave.add(selectedAdress);
     }
 
-    // Emita o evento de mudança na lista
     _selectedAdressListController.add(adressSave.toList());
   }
 
@@ -94,12 +91,10 @@ abstract class _RegisterAdressStore with Store {
       adressSave.clear();
       adressSave.addAll(adressArguments!);
 
-      // Emita o evento de mudança na lista
       _selectedAdressListController.add(adressSave.toList());
     }
   }
 
-  // Adicione um método dispose para liberar recursos quando necessário
   void dispose() {
     _selectedAdressListController.close();
   }

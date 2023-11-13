@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:teste_7_pay/src/ui/pages/adressPage/adress_page.dart';
 
 import '../../../data/models/address_model.dart';
-import '../../../presentation/presenters/registerScore/register_score.dart';
+import '../../../presentation/presenters/registerStore/register_store.dart';
 import '../../widgets/drawer_widget.dart';
 import '../adressPage/components/data_table_adress_widget.dart';
 
@@ -164,7 +164,7 @@ class RegisterAdressPage extends StatelessWidget {
               return buildDataTable([], context);
             }
           } catch (e) {
-            return const Text('Error occurred');
+            return const Text('Erro ao buscar endereço');
           }
         },
       ),

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:teste_7_pay/src/ui/pages/adressRegistrationPage/adress_register_page.dart';
 
 import '../../../data/models/address_model.dart';
-import '../../../presentation/presenters/adressScore/adress_score.dart';
+import '../../../presentation/presenters/adressScore/address_store.dart';
 import '../../widgets/drawer_widget.dart';
 import 'components/data_table_adress_widget.dart';
 
