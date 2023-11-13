@@ -29,13 +29,13 @@ mixin _$RegisterAdressStore on _RegisterAdressStore, Store {
       Atom(name: '_RegisterAdressStore.adressSave', context: context);
 
   @override
-  List<AdressModel>? get adressSave {
+  ObservableList<AdressModel> get adressSave {
     _$adressSaveAtom.reportRead();
     return super.adressSave;
   }
 
   @override
-  set adressSave(List<AdressModel>? value) {
+  set adressSave(ObservableList<AdressModel> value) {
     _$adressSaveAtom.reportWrite(value, super.adressSave, () {
       super.adressSave = value;
     });
@@ -149,17 +149,6 @@ mixin _$RegisterAdressStore on _RegisterAdressStore, Store {
         name: '_RegisterAdressStore.selectAdress');
     try {
       return super.selectAdress(selectedAdress);
-    } finally {
-      _$_RegisterAdressStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void navigateToExpenseDetails() {
-    final _$actionInfo = _$_RegisterAdressStoreActionController.startAction(
-        name: '_RegisterAdressStore.navigateToExpenseDetails');
-    try {
-      return super.navigateToExpenseDetails();
     } finally {
       _$_RegisterAdressStoreActionController.endAction(_$actionInfo);
     }

@@ -137,30 +137,6 @@ mixin _$AdressStore on _AdressStore, Store {
     });
   }
 
-  late final _$logControllerAtom =
-      Atom(name: '_AdressStore.logController', context: context);
-
-  @override
-  TextEditingController get logController {
-    _$logControllerAtom.reportRead();
-    return super.logController;
-  }
-
-  @override
-  set logController(TextEditingController value) {
-    _$logControllerAtom.reportWrite(value, super.logController, () {
-      super.logController = value;
-    });
-  }
-
-  late final _$getAdressAsyncAction =
-      AsyncAction('_AdressStore.getAdress', context: context);
-
-  @override
-  Future<void> getAdress() {
-    return _$getAdressAsyncAction.run(() => super.getAdress());
-  }
-
   late final _$_AdressStoreActionController =
       ActionController(name: '_AdressStore', context: context);
 
@@ -170,17 +146,6 @@ mixin _$AdressStore on _AdressStore, Store {
         name: '_AdressStore._initializeAdressSave');
     try {
       return super._initializeAdressSave(initialAdressSave);
-    } finally {
-      _$_AdressStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void selectAdress(AdressModel selectedAdress) {
-    final _$actionInfo = _$_AdressStoreActionController.startAction(
-        name: '_AdressStore.selectAdress');
-    try {
-      return super.selectAdress(selectedAdress);
     } finally {
       _$_AdressStoreActionController.endAction(_$actionInfo);
     }
@@ -207,8 +172,7 @@ filteredAdress: ${filteredAdress},
 loading: ${loading},
 errorMessage: ${errorMessage},
 ufController: ${ufController},
-bairroController: ${bairroController},
-logController: ${logController}
+bairroController: ${bairroController}
     ''';
   }
 }

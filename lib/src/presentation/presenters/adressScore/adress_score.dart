@@ -1,26 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../data/models/address_model.dart';
-import '../../../data/usecases/remote_adress.dart';
-import '../../../ui/pages/adressPage/adress_page.dart';
-import '../../../ui/pages/adressRegistrationPage/adress_register_page.dart';
 
 part 'adress_score.g.dart';
 
+// ignore: library_private_types_in_public_api
 class AdressStore = _AdressStore with _$AdressStore;
 
 abstract class _AdressStore with Store {
   _AdressStore(
       {List<AdressModel>? adressSave, List<AdressModel>? adressArguments})
       : adressSave = adressSave ?? [],
-        adressArguments = adressArguments ?? [],
-        _remoteAdress = RemoteAdress() {
+        adressArguments = adressArguments ?? [] {
     _initializeAdressSave(adressSave);
   }
-
-  final RemoteAdress _remoteAdress;
 
   @observable
   List<AdressModel>? adressShared;
@@ -42,8 +36,6 @@ abstract class _AdressStore with Store {
   TextEditingController ufController = TextEditingController();
   @observable
   TextEditingController bairroController = TextEditingController();
-  @observable
-  TextEditingController logController = TextEditingController();
 
   @action
   void _initializeAdressSave(List<AdressModel>? initialAdressSave) {
@@ -53,45 +45,16 @@ abstract class _AdressStore with Store {
   }
 
   @action
-  Future<void> getAdress() async {
-    try {
-      loading = true;
-
-      adressShared = await _remoteAdress.fetchAdress(
-          ufController.value.text.toString(),
-          bairroController.value.text.toString(),
-          logController.value.text.toString());
-    } catch (e) {
-      print('Erro ao buscar endereço: $e');
-      throw Exception('Erro ao buscar endereço: $e');
-    } finally {
-      loading = false;
-    }
-  }
-
-  @action
-  void selectAdress(AdressModel selectedAdress) {
-    // Certifique-se de inicializar a lista se ainda não estiver
-    adressSave ??= [];
-
-    // Adiciona o endereço selecionado ao adressSave
-    adressSave!.add(selectedAdress);
-  }
-
-  @action
   void filterAdress() {
     errorMessage = null;
 
     if (adressArguments != null) {
       filteredAdress = adressArguments!
           .where((address) =>
-              address.bairro == bairroController.text &&
-              address.uf == ufController.text)
+              address.bairro.toUpperCase() ==
+                  bairroController.text.toUpperCase() &&
+              address.uf.toUpperCase() == ufController.text.toUpperCase())
           .toList();
     }
   }
-  // @action
-  // void navigateToExpenseDetails() {
-  //   Get.to(() => RegisterAdressPage());
-  // }
 }

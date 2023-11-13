@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mobx/mobx.dart';
 import 'package:teste_7_pay/src/data/models/address_model.dart';
-import 'package:teste_7_pay/src/ui/pages/adressPage/adress_page.dart';
 
 import '../../../data/usecases/remote_adress.dart';
+import 'dart:async';
 
 part 'register_score.g.dart';
 
+// ignore: library_private_types_in_public_api
 class RegisterAdressStore = _RegisterAdressStore with _$RegisterAdressStore;
 
 abstract class _RegisterAdressStore with Store {
   _RegisterAdressStore({
     List<AdressModel>? adressSave,
     List<AdressModel>? adressArguments,
-  })  : adressSave = adressSave ?? [],
+  })  : adressSave = ObservableList<AdressModel>.of(adressSave ?? []),
         adressArguments = adressArguments ?? [],
         _remoteAdress = RemoteAdress() {
     _initializeAdressSave(adressSave);
 
-    // Chama saveListAdress no construtor para salvar os dados ao abrir a tela
     saveListAdress();
   }
 
@@ -29,7 +28,7 @@ abstract class _RegisterAdressStore with Store {
   List<AdressModel>? adressShared;
 
   @observable
-  List<AdressModel>? adressSave;
+  ObservableList<AdressModel> adressSave;
 
   @observable
   bool loading = false;
@@ -44,10 +43,18 @@ abstract class _RegisterAdressStore with Store {
   @observable
   TextEditingController logController = TextEditingController();
 
+  // Adicione um StreamController para notificar sobre alterações na lista
+  final _selectedAdressListController =
+      StreamController<List<AdressModel>>.broadcast();
+
+  // Getter para a stream
+  Stream<List<AdressModel>> get selectedAdressListStream =>
+      _selectedAdressListController.stream;
+
   @action
   void _initializeAdressSave(List<AdressModel>? initialAdressSave) {
     if (initialAdressSave != null && initialAdressSave.isNotEmpty) {
-      adressSave = initialAdressSave;
+      adressSave.addAll(initialAdressSave);
     }
   }
 
@@ -63,7 +70,6 @@ abstract class _RegisterAdressStore with Store {
         logController.value.text.toString(),
       );
     } catch (e) {
-      print('Erro ao buscar endereço: $e');
       throw Exception('Erro ao buscar endereço: $e');
     } finally {
       loading = false;
@@ -72,26 +78,29 @@ abstract class _RegisterAdressStore with Store {
 
   @action
   void selectAdress(AdressModel selectedAdress) {
-    // Adiciona o endereço selecionado ao adressSave
-    adressSave!.add(selectedAdress);
-  }
+    if (adressSave.contains(selectedAdress)) {
+      adressSave.remove(selectedAdress);
+    } else {
+      adressSave.add(selectedAdress);
+    }
 
-  @action
-  void navigateToExpenseDetails() {
-    Get.to(() => AdressPage(
-          adressArguments: adressSave,
-        ));
+    // Emita o evento de mudança na lista
+    _selectedAdressListController.add(adressSave.toList());
   }
 
   @action
   void saveListAdress() {
     if (adressArguments != null && adressArguments!.isNotEmpty) {
-      // Limpa a lista antes de adicionar os novos itens
-      adressSave!.clear();
+      adressSave.clear();
+      adressSave.addAll(adressArguments!);
 
-      for (var element in adressArguments!) {
-        adressSave!.add(element);
-      }
+      // Emita o evento de mudança na lista
+      _selectedAdressListController.add(adressSave.toList());
     }
+  }
+
+  // Adicione um método dispose para liberar recursos quando necessário
+  void dispose() {
+    _selectedAdressListController.close();
   }
 }
